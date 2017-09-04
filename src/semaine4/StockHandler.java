@@ -15,8 +15,8 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-public class StockHandler extends JFrame {
-
+public class StockHandle extends JFrame {
+	
 	private JPanel contentPane;
 	private JTextField nameField;
 	private JTextField categoryField;
@@ -32,7 +32,7 @@ public class StockHandler extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StockHandler frame = new StockHandler();
+					StockHandle frame = new StockHandle();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class StockHandler extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StockHandler() {
+	public StockHandle() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 574, 528);
 		contentPane = new JPanel();
@@ -99,7 +99,7 @@ public class StockHandler extends JFrame {
 		JLabel lblHome = new JLabel("Gestion du stock");
 		lblHome.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHome.setBounds(85, 31, 192, 22);
+		lblHome.setBounds(85, 32, 192, 22);
 		contentPane.add(lblHome);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -109,26 +109,6 @@ public class StockHandler extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
 			},
 			new String[] {
 				"nom", "cat\u00E9gorie", "code", "prix"
@@ -144,17 +124,7 @@ public class StockHandler extends JFrame {
 				float price = Float.valueOf(priceField.getText());
 			    int cod = Integer.valueOf(codeField.getText());
 			    
-				Produit prd = new Produit(
-						nameField.getText(),
-						categoryField.getText(),
-						cod,
-						price
-						);
-				
-				Object[] a = {prd.getNom(),
-							  prd.getCategory(),
-							  prd.getCode(),
-							  prd.getPrix() +"Da"};
+				Object[] a = {nameField.getText(),categoryField.getText(),codeField.getText(),priceField.getText()};
 							 
 				model.addRow(a);
 				
@@ -181,7 +151,32 @@ public class StockHandler extends JFrame {
 		contentPane.add(deleteField);
 		
 		JButton deleteButton = new JButton("Supprimer le produit");
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				String search = deleteField.getText();
+				int searchIndex = 0;
+				for (int i = 0; i < model.getRowCount(); i++) {
+					if( search.matches(model.getValueAt(i,0).toString())){
+						searchIndex = i;
+					}
+				}
+				model.removeRow(searchIndex);
+				deleteField.setText("");
+			}
+		});
 		deleteButton.setBounds(85, 418, 192, 25);
 		contentPane.add(deleteButton);
+		
+		JButton btnModifierLeProduit = new JButton("Modifier le produit");
+		btnModifierLeProduit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String a = model.getValueAt(table.getSelectedRow(),table.getSelectedColumn()).toString();
+				AlterFrame alt = new AlterFrame(a,model, table.getSelectedRow(),table.getSelectedColumn());
+				alt.setVisible(true);
+			}
+		});
+		btnModifierLeProduit.setBounds(333, 418, 192, 25);
+		contentPane.add(btnModifierLeProduit);
 	}
 }
