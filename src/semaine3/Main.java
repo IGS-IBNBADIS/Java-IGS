@@ -1,6 +1,6 @@
-package test1;
+package semaine3;
 
-import test1.Chat;
+import semaine3.Chat;
 
 public class Main {
 	
