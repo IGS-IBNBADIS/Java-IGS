@@ -15,7 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-public class StockHandle extends JFrame {
+public class StockHandler extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField nameField;
@@ -32,7 +32,7 @@ public class StockHandle extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StockHandle frame = new StockHandle();
+					StockHandler frame = new StockHandler();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class StockHandle extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StockHandle() {
+	public StockHandler() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 574, 528);
 		contentPane = new JPanel();
